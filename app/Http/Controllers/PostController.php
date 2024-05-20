@@ -43,4 +43,15 @@ class PostController extends Controller
 
         return response($post, 201);
     }
+
+    function update(Request $request, $id) {
+        Post::where("id", $id)->update([
+            "title" => $request->title,
+            "post_content" => $request->post_content
+        ]);
+
+        return response([
+            "message" => "post updated"
+        ]);
+    }
 }
