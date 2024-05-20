@@ -52,6 +52,14 @@ class PostController extends Controller
 
         return response([
             "message" => "post updated"
-        ]);
+        ], 200);
+    }
+
+    function destroy(Request $request, $id) {
+        Post::where("id", $id)->delete();
+
+        return response([
+            "message" => "post deleted"
+        ], 200);
     }
 }

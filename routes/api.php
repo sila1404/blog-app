@@ -13,6 +13,7 @@ Route::post('login', [AuthController::class, "login"]);
 Route::get('posts', [PostController::class, "getPosts"]);
 Route::post('posts', [PostController::class, "store"]);
 Route::put('posts/{id}', [PostController::class, "update"]);
+Route::delete('posts/{id}', [PostController::class, "destroy"]);
 
 Route::get('/user', function (Request $request) {
     return $request->user();
