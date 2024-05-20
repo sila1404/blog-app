@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use DB;
 
 use App\Models\Post;
@@ -61,5 +62,37 @@ class PostController extends Controller
         return response([
             "message" => "post deleted"
         ], 200);
+    }
+
+    function addImage(Request $request) {
+        $field = $request->all();
+
+        $errors = Validator::make($field, [
+            "postId" => "required",
+            "image" => "required|image|max:2000"
+        ]);
+
+        if($errors->fails()) {
+            return response($errors->errors()->all(), 422);
+        }
+
+        if($request->hasFile("image")) {
+            $image = $request->file("image");
+
+            $input["file"] = time().".".$image->getClientOriginalExtension();
+
+            Storage::disk("public")
+            ->put("images/".$input["file"], file_get_contents($image));
+
+            $imageURL = url("/")."/storage/images/".$input["file"];
+
+            Post::Where("id", $request->postId)->update([
+                "image" => $imageURL
+            ]);
+
+            return response([
+                "message" => "post image uploaded"
+            ], 200);
+        }
     }
 }
