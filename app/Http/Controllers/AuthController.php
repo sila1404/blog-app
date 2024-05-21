@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Models\User;
 use Config;
+use DB;
 
 class AuthController extends Controller
 {
@@ -69,5 +70,16 @@ class AuthController extends Controller
             "user"=>$user,
             "token"=>$token
         ]);
+    }
+
+    function logoutUser(Request $request) {
+        $userId = $request->userId;
+        DB::table('personal_access_tokens')
+        ->where("tokenable_id", $userId)
+        ->delete();
+
+        return response([
+            "message" => "user logged out"
+        ], 200);
     }
 }

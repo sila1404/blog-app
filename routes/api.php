@@ -17,6 +17,8 @@ Route::middleware(["auth:sanctum"])->group(function () {
     Route::put('posts/{id}', [PostController::class, "update"]);
     Route::delete('posts/{id}', [PostController::class, "destroy"]);
     Route::post('posts/upload-image', [PostController::class, "addImage"]);
+
+    Route::post('logout', [AuthController::class, "logoutUser"]);
 });
 
 Route::get('/user', function (Request $request) {
