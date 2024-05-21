@@ -10,11 +10,14 @@ use App\Http\Controllers\PostController;
 Route::post('register', [AuthController::class, "register"]);
 Route::post('login', [AuthController::class, "login"]);
 
-Route::get('posts', [PostController::class, "getPosts"]);
-Route::post('posts', [PostController::class, "store"]);
-Route::put('posts/{id}', [PostController::class, "update"]);
-Route::delete('posts/{id}', [PostController::class, "destroy"]);
-Route::post('posts/upload-image', [PostController::class, "addImage"]);
+// Protected route
+Route::middleware(["auth:sanctum"])->group(function () {
+    Route::get('posts', [PostController::class, "getPosts"]);
+    Route::post('posts', [PostController::class, "store"]);
+    Route::put('posts/{id}', [PostController::class, "update"]);
+    Route::delete('posts/{id}', [PostController::class, "destroy"]);
+    Route::post('posts/upload-image', [PostController::class, "addImage"]);
+});
 
 Route::get('/user', function (Request $request) {
     return $request->user();
