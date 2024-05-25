@@ -1,13 +1,30 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { IRegisterInput } from './auth-type'
+import { useVuelidate } from '@vuelidate/core'
+import { required, email } from '@vuelidate/validators'
 import { RouterLink } from 'vue-router'
+import FormError from '@/components/FormError.vue'
 
 const registerInput = ref<IRegisterInput>({
   name: '',
   email: '',
   password: ''
 })
+
+const rules = {
+  name: { required },
+  email: { required, email },
+  password: { required }
+}
+
+const v$ = useVuelidate(rules, registerInput)
+
+function registerUser() {
+  const result = v$.value.$validate()
+
+  if (!result) return
+}
 </script>
 
 <template>
@@ -18,25 +35,19 @@ const registerInput = ref<IRegisterInput>({
         <div class="card-header">Register Page</div>
         {{ registerInput }}
         <div class="card-body">
-          <form action="">
-            <div class="form-group">
-              <label for="">Name</label>
-              <input type="text" v-model="registerInput.name" name="" id="" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label for="">Email</label>
-              <input type="text" v-model="registerInput.email" name="" id="" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label for="">Password</label>
-              <input
-                type="text"
-                v-model="registerInput.password"
-                name=""
-                id=""
-                class="form-control"
-              />
-            </div>
+          <form action="" @submit.prevent="registerUser">
+            <!-- start validate name input -->
+            <FormError inputLabel="Name" :formErrors="v$.name.$errors">
+              <input type="text" v-model="registerInput.name" class="form-control" />
+            </FormError>
+            <!-- start validate email input -->
+            <FormError inputLabel="E-mail" :formErrors="v$.email.$errors">
+              <input type="text" v-model="registerInput.email" class="form-control" />
+            </FormError>
+            <!-- start validate password input -->
+            <FormError inputLabel="Password" :formErrors="v$.password.$errors">
+              <input type="password" v-model="registerInput.password" class="form-control" />
+            </FormError>
             <br />
             <RouterLink to="/">Login to account</RouterLink>
             <br />
