@@ -36,7 +36,7 @@ class AuthController extends Controller
 
         return response([
             "users"=>$user,
-            "message"=>"youe account was created"
+            "message"=>"your account was created"
         ]);
     }
 
