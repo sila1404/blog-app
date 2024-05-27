@@ -5,6 +5,9 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
 import { RouterLink } from 'vue-router'
 import FormError from '@/components/FormError.vue'
+import { createUserHTTP } from './actions/RegisterUser'
+import { showError, successMsg } from '@/helper/Toastification'
+import BaseBtn from '@/components/BaseBtn.vue'
 
 const registerInput = ref<IRegisterInput>({
   name: '',
@@ -20,10 +23,25 @@ const rules = {
 
 const v$ = useVuelidate(rules, registerInput)
 
-function registerUser() {
+const loadingStatus = ref(false)
+async function registerUser() {
   const result = v$.value.$validate()
 
   if (!result) return
+
+  try {
+    loadingStatus.value = true
+    const data = await createUserHTTP(registerInput.value)
+    registerInput.value = {} as IRegisterInput
+    successMsg(data.message)
+    loadingStatus.value = false
+    v$.value.$reset()
+  } catch (error) {
+    loadingStatus.value = false
+    for (const message of error as string[]) {
+      showError(message)
+    }
+  }
 }
 </script>
 
@@ -52,7 +70,7 @@ function registerUser() {
             <RouterLink to="/">Login to account</RouterLink>
             <br />
             <div class="form-group">
-              <button class="btn btn-primary">Register</button>
+              <BaseBtn label="Register" :loading="loadingStatus" />
             </div>
           </form>
         </div>
