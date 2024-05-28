@@ -42,7 +42,9 @@ class PostController extends Controller
             "post_content" => $field["post_content"],
         ]);
 
-        return response($post, 201);
+        return response([
+            "message" => "post created"
+        ], 201);
     }
 
     function update(Request $request, $id) {
