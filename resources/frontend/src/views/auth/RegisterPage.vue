@@ -25,7 +25,7 @@ const v$ = useVuelidate(rules, registerInput)
 
 const loadingStatus = ref(false)
 async function registerUser() {
-  const result = v$.value.$validate()
+  const result = await v$.value.$validate()
 
   if (!result) return
 
