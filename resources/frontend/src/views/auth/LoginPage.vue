@@ -5,6 +5,9 @@ import { required, email } from '@vuelidate/validators'
 import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 import type { ILoginInput } from './auth-type'
+import BaseBtn from '@/components/BaseBtn.vue'
+import { loginUserHTTP } from './actions/LoginUser'
+import { showError } from '@/helper/Toastification'
 
 const loginInput = ref<ILoginInput>({
   email: '',
@@ -18,10 +21,22 @@ const rules = {
 
 const v$ = useVuelidate(rules, loginInput)
 
-function loginUser() {
-  const result = v$.value.$validate()
+const loadingStatus = ref(false)
+async function loginUser() {
+  const result = await v$.value.$validate()
 
   if (!result) return
+
+  try {
+    loadingStatus.value = false
+    const data = await loginUserHTTP(loginInput.value)
+    localStorage.setItem('userData', JSON.stringify(data))
+    window.location.href = '/admin'
+    loadingStatus.value = false
+  } catch (error) {
+    loadingStatus.value = false
+    showError((error as Error).message)
+  }
 }
 </script>
 
@@ -45,7 +60,9 @@ function loginUser() {
             <RouterLink to="/register">Create an account</RouterLink>
             <br />
             <div class="form-group">
-              <button class="btn btn-primary">Login</button>
+              <div class="form-group">
+                <BaseBtn label="Login" :loading="loadingStatus" />
+              </div>
             </div>
           </form>
         </div>
