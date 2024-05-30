@@ -17,7 +17,7 @@ Route::middleware(["auth:sanctum"])->group(function () {
     Route::put('posts/{id}', [PostController::class, "update"]);
     Route::delete('posts/{id}', [PostController::class, "destroy"]);
     Route::post('posts/upload-image', [PostController::class, "addImage"]);
-
+    Route::get('check/user/loggedin', [AuthController::class, "userIsLoggedIn"]);
     Route::post('logout', [AuthController::class, "logoutUser"]);
 });
 

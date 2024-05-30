@@ -72,14 +72,20 @@ class AuthController extends Controller
         ]);
     }
 
-    function logoutUser(Request $request) {
+    public function logoutUser(Request $request) {
         $userId = $request->userId;
         DB::table('personal_access_tokens')
-        ->where("tokenable_id", $userId)
+        ->where("tokenable_id", $request->$userId)
         ->delete();
 
         return response([
             "message" => "user logged out"
+        ], 200);
+    }
+
+    public function userIsLoggedIn(Request $request) {
+        return response([
+            "message" => ""
         ], 200);
     }
 }
