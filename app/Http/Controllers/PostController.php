@@ -19,10 +19,10 @@ class PostController extends Controller
         if(!is_null($query)) {
             $post = $data->where("title", "like", "%".$query."%");
 
-            return response($post->paginate(10), 200);
+            return response($post->paginate(5), 200);
         }
 
-        return response($data->paginate(10), 200);
+        return response($data->paginate(5), 200);
     }
 
     function store(Request $request) {
