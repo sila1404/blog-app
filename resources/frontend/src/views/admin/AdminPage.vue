@@ -34,13 +34,16 @@ onMounted(async () => {
 <template>
   <div class="container">
     <div>
-      <span>Name : Test User</span><br />
-      <span>Email : <a href="">test@mail.com</a></span
-      ><br />
-      <span style="color: red; cursor: pointer" @click="logoutUser"><b>Logout</b></span
-      ><br />
+      <span>Name : {{ userData?.user.name }}</span>
+      <br />
+      <span>
+        Email : <a href="">{{ userData?.user.email }}</a>
+      </span>
+      <br />
+      <span style="color: red; cursor: pointer" @click="logoutUser"><b>Logout</b></span>
+      <br />
     </div>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd">
+    <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">

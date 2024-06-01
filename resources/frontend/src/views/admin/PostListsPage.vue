@@ -51,7 +51,7 @@ onMounted(async () => {
             <td>{{ post.id }}</td>
             <td>Image</td>
             <td>{{ post.title }}</td>
-            <td>...</td>
+            <td>{{ post.post_content }}</td>
             <td>
               <button class="btn btn-primary">Upload</button>
             </td>
