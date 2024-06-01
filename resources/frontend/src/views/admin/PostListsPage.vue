@@ -3,6 +3,9 @@ import { Bootstrap5Pagination } from 'laravel-vue-pagination'
 import { onMounted, ref } from 'vue'
 import { type GetPostResponse, getPostHTTP } from './actions/getPostList'
 import { myDebounce } from '@/helper/util'
+import { confirmDelete } from '@/helper/SweetAlert'
+import { deletePostHTTP } from './actions/deletePost'
+import { successMsg } from '@/helper/Toastification'
 
 const posts = ref<GetPostResponse>()
 const query = ref<string>('')
@@ -15,6 +18,17 @@ async function showPost(page = 1, query = '') {
 const searchPost = myDebounce(async () => {
   await showPost(1, query.value)
 }, 300)
+
+async function deletePost(postID: number) {
+  confirmDelete()
+    .then(async () => {
+      console.log('Post Delete')
+      const data = await deletePostHTTP(postID)
+      await showPost()
+      successMsg(data.message)
+    })
+    .catch((error) => console.log(error))
+}
 
 onMounted(async () => {
   await showPost()
@@ -59,7 +73,7 @@ onMounted(async () => {
               <button class="btn btn-outline-primary">Edit</button>
             </td>
             <td>
-              <button class="btn btn-outline-danger">Delete</button>
+              <button class="btn btn-outline-danger" @click="deletePost(post.id)">Delete</button>
             </td>
           </tr>
         </tbody>
