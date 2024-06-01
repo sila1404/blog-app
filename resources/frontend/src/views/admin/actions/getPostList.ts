@@ -1,5 +1,5 @@
 import { verifyToken } from "@/helper/verifyToken";
-import type { ICreatePostInput, IPostLists } from "../admin-types";
+import type { IPostLists } from "../admin-types";
 import { App } from "@/shared/App";
 
 export type GetPostResponse = {
