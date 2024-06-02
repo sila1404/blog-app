@@ -5,7 +5,7 @@ import { RouterLink } from 'vue-router'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import FormError from '@/components/FormError.vue'
-import type { ICreatePostInput } from './admin-types'
+import type { ICreatePostInput } from './types/createPost.types'
 import { createPostHTTP } from './actions/createPost'
 import { showError, successMsg } from '@/helper/Toastification'
 

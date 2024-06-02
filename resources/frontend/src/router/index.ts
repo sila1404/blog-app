@@ -28,17 +28,17 @@ const router = createRouter({
 				{
 					path: "/admin",
 					name: "dashboard",
-					component: () => import("../views/admin/DashboardPage.vue"),
+					component: () => import("../views/admin/dashboard/DashboardPage.vue"),
 				},
 				{
 					path: "/create-post",
 					name: "create-post",
-					component: () => import("../views/admin/CreatePostsPage.vue"),
+					component: () => import("../views/admin/createPost/CreatePostsPage.vue"),
 				},
 				{
 					path: "/post-lists",
 					name: "post-lists",
-					component: () => import("../views/admin/PostListsPage.vue"),
+					component: () => import("../views/admin/postLists/PostListsPage.vue"),
 				},
 
 			]

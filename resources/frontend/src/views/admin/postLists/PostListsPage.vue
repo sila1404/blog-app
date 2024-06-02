@@ -6,6 +6,7 @@ import { myDebounce } from '@/helper/util'
 import { confirmDelete } from '@/helper/SweetAlert'
 import { deletePostHTTP } from './actions/deletePost'
 import { successMsg } from '@/helper/Toastification'
+import PostTable from './components/PostTable.vue'
 
 const posts = ref<GetPostResponse>()
 const query = ref<string>('')
@@ -48,36 +49,7 @@ onMounted(async () => {
   </div>
   <div class="row">
     <div class="col-md-8">
-      <table class="table table-bordered table-hover table-striped">
-        <thead>
-          <tr>
-            <td>ID</td>
-            <td>Image</td>
-            <td>Title</td>
-            <td>Content</td>
-            <td>Upload</td>
-            <td>Edit</td>
-            <td>Delete</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="post in posts?.data" :key="post?.id">
-            <td>{{ post.id }}</td>
-            <td>Image</td>
-            <td>{{ post.title }}</td>
-            <td>{{ post.post_content }}</td>
-            <td>
-              <button class="btn btn-primary">Upload</button>
-            </td>
-            <td>
-              <button class="btn btn-outline-primary">Edit</button>
-            </td>
-            <td>
-              <button class="btn btn-outline-danger" @click="deletePost(post.id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <PostTable :posts="posts" @deletePost="deletePost"/>
 
       <div v-if="posts">
         <Bootstrap5Pagination :data="posts" @pagination-change-page="showPost" />
