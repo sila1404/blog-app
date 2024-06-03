@@ -5,7 +5,10 @@ defineProps<{
   posts: GetPostResponse | undefined
 }>()
 
-const emit = defineEmits<(e: 'deletePost', postId: number) => void>()
+const emit = defineEmits<{
+  (e: 'deletePost', postId: number): void
+  (e: 'showModal', postId: number): void
+}>()
 </script>
 <template>
   <table class="table table-bordered table-hover table-striped">
@@ -27,13 +30,15 @@ const emit = defineEmits<(e: 'deletePost', postId: number) => void>()
         <td>{{ post.title }}</td>
         <td>{{ post.post_content }}</td>
         <td>
-          <button class="btn btn-primary">Upload</button>
+          <button class="btn btn-primary" @click="emit('showModal', post.id)">Upload</button>
         </td>
         <td>
           <button class="btn btn-outline-primary">Edit</button>
         </td>
         <td>
-          <button class="btn btn-outline-danger" @click="emit('deletePost', post.id)" >Delete</button>
+          <button class="btn btn-outline-danger" @click="emit('deletePost', post.id)">
+            Delete
+          </button>
         </td>
       </tr>
     </tbody>

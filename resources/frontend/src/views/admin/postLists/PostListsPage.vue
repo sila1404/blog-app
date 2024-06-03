@@ -31,6 +31,10 @@ async function deletePost(postID: number) {
     .catch((error) => console.log(error))
 }
 
+function showModal(postId: number) {
+  console.log(postId)
+}
+
 onMounted(async () => {
   await showPost()
 })
@@ -49,7 +53,7 @@ onMounted(async () => {
   </div>
   <div class="row">
     <div class="col-md-8">
-      <PostTable :posts="posts" @deletePost="deletePost"/>
+      <PostTable :posts="posts" @deletePost="deletePost" @showModal="showModal"/>
 
       <div v-if="posts">
         <Bootstrap5Pagination :data="posts" @pagination-change-page="showPost" />
