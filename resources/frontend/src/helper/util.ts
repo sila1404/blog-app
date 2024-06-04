@@ -7,3 +7,21 @@ export function myDebounce(func: any, delay: number) {
 		debounceTimer = setTimeout(() => func(...args), delay);
 	};
 }
+
+export function openModal(element: string) {
+  let modal = document.getElementById(element) as HTMLElement
+
+  if (modal) {
+    setTimeout(() => {
+      modal.classList.add('fade', 'show')
+      modal.style.display = 'block'
+      modal.classList.add('in')
+    }, 500)
+  }
+
+  document.body.classList.add('model-open')
+
+  let modalBackdrop = document.createElement('div')
+  modalBackdrop.className = 'modal-backdrop fade show'
+  document.body.appendChild(modalBackdrop)
+}

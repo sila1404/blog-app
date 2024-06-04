@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { openModal } from '@/helper/util'
+import UploadImageModal from './components/UploadImageModal.vue'
 import { Bootstrap5Pagination } from 'laravel-vue-pagination'
 import { onMounted, ref } from 'vue'
 import { type GetPostResponse, getPostHTTP } from './actions/getPostList'
@@ -31,8 +33,10 @@ async function deletePost(postID: number) {
     .catch((error) => console.log(error))
 }
 
+
+
 function showModal(postId: number) {
-  console.log(postId)
+  openModal('postModal')
 }
 
 onMounted(async () => {
@@ -53,7 +57,9 @@ onMounted(async () => {
   </div>
   <div class="row">
     <div class="col-md-8">
-      <PostTable :posts="posts" @deletePost="deletePost" @showModal="showModal"/>
+      <UploadImageModal />
+
+      <PostTable :posts="posts" @deletePost="deletePost" @showModal="showModal" />
 
       <div v-if="posts">
         <Bootstrap5Pagination :data="posts" @pagination-change-page="showPost" />
