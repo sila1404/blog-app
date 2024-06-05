@@ -1,5 +1,7 @@
 <script setup lang="ts">
-
+const emit = defineEmits<{
+  (e: 'closeModal'): void
+}>()
 </script>
 <template>
   <!-- Modal -->
@@ -19,11 +21,19 @@
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            @click="emit('closeModal')"
           ></button>
         </div>
         <div class="modal-body">...</div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            @click="emit('closeModal')"
+          >
+            Close
+          </button>
           <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>

@@ -25,3 +25,19 @@ export function openModal(element: string) {
   modalBackdrop.className = 'modal-backdrop fade show'
   document.body.appendChild(modalBackdrop)
 }
+
+export async function closeModal(element: string) {
+  let modal = document.getElementById(element) as HTMLElement
+  let modalBackdrop = document.querySelector(".modal-backdrop")
+
+  if(modal) {
+    modal.classList.remove("in", "show", "fade")
+    modal.style.display = ""
+  
+    document.body.classList.remove("modal-open")
+
+    if(modalBackdrop) {
+      document.body.removeChild(modalBackdrop)
+    }
+  }
+}
