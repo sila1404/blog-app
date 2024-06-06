@@ -32,9 +32,11 @@ async function deletePost(postID: number) {
     })
     .catch((error) => console.log(error))
 }
-
-function showModal(postId: number) {
-  openModal('postModal')
+const currentPostId = ref<number>(0)
+async function showModal(postId: number) {
+  openModal('postModal', postId).then(postId => {
+    currentPostId.value = postId
+  })
 }
 
 onMounted(async () => {
@@ -55,7 +57,7 @@ onMounted(async () => {
   </div>
   <div class="row">
     <div class="col-md-8">
-      <UploadImageModal @closeModal="closeModal('postModal')" />
+      <UploadImageModal @refreshTable="showPost" :postId="currentPostId" @closeModal="closeModal('postModal')" />
 
       <PostTable :posts="posts" @deletePost="deletePost" @showModal="showModal" />
 

@@ -26,7 +26,9 @@ const emit = defineEmits<{
     <tbody>
       <tr v-for="post in posts?.data" :key="post?.id">
         <td>{{ post.id }}</td>
-        <td>Image</td>
+        <td>
+          <img :src="post.image" style="height: 75px;" />
+        </td>
         <td>{{ post.title }}</td>
         <td>{{ post.post_content }}</td>
         <td>
