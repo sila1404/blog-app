@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { GetPostResponse } from '../actions/getPostList'
+import type { IEditPostDataInput } from '../types/postlists.types'
 
 defineProps<{
   posts: GetPostResponse | undefined
@@ -8,6 +9,7 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'deletePost', postId: number): void
   (e: 'showModal', postId: number): void
+  (e: 'editPost', post: IEditPostDataInput): void
 }>()
 </script>
 <template>
@@ -27,7 +29,7 @@ const emit = defineEmits<{
       <tr v-for="post in posts?.data" :key="post?.id">
         <td>{{ post.id }}</td>
         <td>
-          <img :src="post.image" style="height: 75px;" />
+          <img :src="post.image" style="height: 75px" />
         </td>
         <td>{{ post.title }}</td>
         <td>{{ post.post_content }}</td>
@@ -35,7 +37,7 @@ const emit = defineEmits<{
           <button class="btn btn-primary" @click="emit('showModal', post.id)">Upload</button>
         </td>
         <td>
-          <button class="btn btn-outline-primary">Edit</button>
+          <button class="btn btn-outline-primary" @click="emit('editPost', post)">Edit</button>
         </td>
         <td>
           <button class="btn btn-outline-danger" @click="emit('deletePost', post.id)">
